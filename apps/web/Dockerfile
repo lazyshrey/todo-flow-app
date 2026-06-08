@@ -4,14 +4,14 @@ RUN apk add --no-cache python3 make g++ sqlite-dev
 
 WORKDIR /app
 
-# Copy lock files and package.json files for dependency installation caching
-COPY package.json package-lock.json ./
+# Copy lock files, npmrc, and package.json files for dependency installation caching
+COPY package.json package-lock.json .npmrc ./
 COPY apps/web/package.json ./apps/web/
 COPY apps/discord-bot/package.json ./apps/discord-bot/
 COPY apps/mcp-server/package.json ./apps/mcp-server/
 
-# Install dependencies (will compile better-sqlite3 for alpine)
-RUN npm ci
+# Install dependencies (will compile better-sqlite3 for alpine) using cache mount
+RUN --mount=type=cache,target=/root/.npm npm ci
 
 # Copy the rest of monorepo code
 COPY . .
@@ -37,13 +37,13 @@ ENV NODE_ENV=production
 RUN apk add --no-cache sqlite-libs
 
 # Copy workspace configurations to install production dependencies
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .npmrc ./
 COPY apps/web/package.json ./apps/web/
 COPY apps/discord-bot/package.json ./apps/discord-bot/
 COPY apps/mcp-server/package.json ./apps/mcp-server/
 
-# Install ONLY production dependencies
-RUN npm ci --omit=dev
+# Install ONLY production dependencies using cache mount
+RUN --mount=type=cache,target=/root/.npm npm ci --omit=dev
 
 # Copy build outputs and source files from builder
 COPY --from=builder /app/apps/web/next.config.ts ./apps/web/
