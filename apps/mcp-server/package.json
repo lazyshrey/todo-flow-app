@@ -1,0 +1,29 @@
+{
+  "name": "todo-flow-mcp",
+  "version": "1.0.0",
+  "description": "Model Context Protocol Server for Todo Flow App",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "todo-flow-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsup --watch --onSuccess \"node dist/index.js\"",
+    "build": "tsup",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.2.0",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "tsx": "^4.12.0",
+    "@types/node": "^20.12.12",
+    "tsup": "^8.1.0"
+  }
+}

@@ -1,0 +1,187 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root, .theme-dark {
+  /* Default: Dark Grayscale Theme */
+  --color-zinc-950: #09090b;
+  --color-zinc-900: #18181b;
+  --color-zinc-800: #27272a;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-600: #52525b;
+  --color-zinc-500: #71717a;
+  --color-zinc-450: #a1a1aa;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-350: #d4d4d8;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-100: #f4f4f5;
+  --color-white: #ffffff;
+  
+  --scrollbar-track: #030712;
+  --scrollbar-thumb: #27272a;
+  --scrollbar-thumb-hover: #3f3f46;
+  --backdrop-bg: rgba(255, 255, 255, 0.01);
+}
+
+.theme-light {
+  /* Light Theme Overrides */
+  --color-zinc-950: #ffffff; /* Main background becomes white */
+  --color-zinc-900: #f4f4f5; /* Sidebar background becomes light gray */
+  --color-zinc-800: #ffffff; /* Card/Modal background becomes white */
+  --color-zinc-700: #e4e4e7;
+  --color-zinc-600: #a1a1aa;
+  --color-zinc-500: #71717a;
+  --color-zinc-450: #52525b;
+  --color-zinc-400: #71717a; /* Subtext */
+  --color-zinc-350: #27272a;
+  --color-zinc-300: #27272a;
+  --color-zinc-200: #18181b; /* Text hover */
+  --color-zinc-100: #09090b; /* Primary text becomes dark */
+  
+  /* Invert White: bg-white/5 -> black/5, bg-white -> black */
+  --color-white: #000000;
+  
+  --scrollbar-track: #f4f4f5;
+  --scrollbar-thumb: #d4d4d8;
+  --scrollbar-thumb-hover: #a1a1aa;
+  --backdrop-bg: rgba(0, 0, 0, 0.03);
+}
+
+.theme-gray {
+  /* Discord Gray Theme Overrides */
+  --color-zinc-950: #313338; /* Chat area background */
+  --color-zinc-900: #2b2d31; /* Channel list background */
+  --color-zinc-800: #1e1f22; /* Card / dialog / Server list background */
+  --color-zinc-700: #4e5058;
+  --color-zinc-600: #80848e;
+  --color-zinc-500: #949ba4;
+  --color-zinc-450: #b5bac1;
+  --color-zinc-400: #949ba4;
+  --color-zinc-350: #dbdee1;
+  --color-zinc-300: #dbdee1;
+  --color-zinc-200: #dbdee1;
+  --color-zinc-100: #f2f3f5; /* Primary text */
+  --color-white: #ffffff;
+  
+  --scrollbar-track: #1e1f22;
+  --scrollbar-thumb: #2b2d31;
+  --scrollbar-thumb-hover: #35373c;
+  --backdrop-bg: rgba(255, 255, 255, 0.01);
+}
+
+body {
+  background-color: var(--color-zinc-950);
+  color: var(--color-zinc-100);
+}
+
+/* Custom Sleek Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* Custom Scrollbar for Webkit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 9999px;
+  border: 2px solid var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Dialog backdrop animation */
+dialog::backdrop {
+  background: var(--backdrop-bg);
+  backdrop-filter: blur(12px);
+  transition: backdrop-filter 0.3s ease;
+}
+
+/* Clerk Social Button Overrides for Dark Mode */
+.cl-socialButtonsBlockButton {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease !important;
+}
+
+.cl-socialButtonsBlockButton:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.cl-socialButtonsBlockButtonText {
+  color: #f4f4f5 !important;
+  font-weight: 600 !important;
+}
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --radius: 0.625rem;
+}
+
+@layer base {
+  * {
+    @apply border-zinc-800/10 dark:border-white/10 outline-ring/50;
+  }
+  body {
+    @apply bg-zinc-950 text-zinc-100;
+  }
+  html {
+    @apply font-sans;
+  }
+}

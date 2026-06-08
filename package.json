@@ -1,0 +1,21 @@
+{
+  "name": "todo-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=apps/web",
+    "dev:bot": "npm run dev --workspace=apps/discord-bot",
+    "dev:mcp": "npm run dev --workspace=apps/mcp-server",
+    "dev": "concurrently --kill-others-on-fail \"npm:dev:*\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.4.5"
+  },
+  "overrides": {
+    "better-sqlite3": "^11.3.0"
+  }
+}

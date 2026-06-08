@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    volumes:
+      - todo_db_data:/app/apps/web/database
+    restart: unless-stopped
+
+  bot:
+    build:
+      context: .
+      dockerfile: apps/discord-bot/Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - web
+    restart: unless-stopped
+
+volumes:
+  todo_db_data:
