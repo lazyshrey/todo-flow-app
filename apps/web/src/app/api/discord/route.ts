@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/database';
+
+export const dynamic = 'force-dynamic';
 import crypto from 'crypto';
 
 // Helper to validate the internal bot secret

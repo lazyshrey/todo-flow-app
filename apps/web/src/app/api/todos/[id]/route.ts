@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
+
+export const dynamic = 'force-dynamic';
 import { db } from '@/database';
 
 interface RouteParams {
