@@ -712,7 +712,7 @@ function SelfHostSection() {
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a
-            href="https://github.com"
+            href="https://github.com/lazyshrey/todo-flow-app"
             target="_blank"
             rel="noreferrer"
             className="rounded-full border border-white/10 bg-white/5 px-6 py-3 text-xs font-bold text-zinc-200 hover:bg-white/10 transition-colors"

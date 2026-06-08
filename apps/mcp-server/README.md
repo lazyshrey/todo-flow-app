@@ -1,4 +1,4 @@
-# todo-flow-mcp
+# [todo-flow-mcp](https://www.npmjs.com/package/todo-flow-mcp)
 
 Model Context Protocol (MCP) server for **Todo Flow**, enabling AI agents (like Claude Desktop, Claude Code, Antigravity, or Codex) to securely read, create, edit, and complete todos directly from your workspace.
 
@@ -29,24 +29,42 @@ todo-flow-mcp
 
 ## ⚙️ Configuration & Environment Variables
 
-The server requires the following environment variables to authenticate with your Todo Flow backend database:
+The server requires the following environment variables to authenticate with your Todo Flow backend database (when running locally):
 
 | Environment Variable | Description | Required | Default |
 | :--- | :--- | :--- | :--- |
 | `TODO_MCP_TOKEN` | Your custom API token generated in the Web Settings dashboard. | **Yes** | None |
-| `API_URL` | The endpoint URL of your deployed Todo Flow instance. | No | `http://localhost:3000/api/mcp` |
+| `API_URL` | The endpoint URL of your deployed Todo Flow instance. | No | `https://todo.jene.in/api/mcp` |
 
 ---
 
 ## 🛠️ Integration Guides
 
+You can integrate this MCP server with your AI clients using either the **Hosted Server-Sent Events (SSE) protocol** (live at `todo-mcp.jene.in/sse`) or **locally via `npx`** (running on stdio).
+
 ### 1. Claude Desktop Config
+
 To integrate this server with **Claude Desktop**, open your desktop configuration file:
 * **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 * **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 
-Add the following config block inside the `mcpServers` object:
+Add **one** of the following config blocks inside the `mcpServers` object:
 
+#### Option A: Connect to your Hosted SSE Server (Recommended)
+This uses your live hosted server directly and does not run any local processes:
+```json
+{
+  "mcpServers": {
+    "todo-flow": {
+      "type": "sse",
+      "url": "https://todo-mcp.jene.in/sse"
+    }
+  }
+}
+```
+
+#### Option B: Run locally via `npx` (stdio)
+Runs a local binary on your machine that communicates with the API:
 ```json
 {
   "mcpServers": {
@@ -55,20 +73,22 @@ Add the following config block inside the `mcpServers` object:
       "args": ["-y", "todo-flow-mcp"],
       "env": {
         "TODO_MCP_TOKEN": "YOUR_MCP_TOKEN_HERE",
-        "API_URL": "https://your-todo-flow-domain.com/api/mcp"
+        "API_URL": "https://todo.jene.in/api/mcp"
       }
     }
   }
 }
 ```
 
-### 2. Claude Code or Antigravity Config
-In agents or CLI tools supporting MCP, add the server to your settings configuration:
-* **Command**: `npx`
-* **Args**: `["-y", "todo-flow-mcp"]`
-* **Environment variables**:
-  - `TODO_MCP_TOKEN` = `your_token`
-  - `API_URL` = `https://your-todo-flow-domain.com/api/mcp`
+### 2. Cursor, Claude Code, or Antigravity Config
+In agents or CLI tools supporting MCP, add the server using one of the two modes:
+- **Hosted SSE Mode (Recommended):** Add an SSE connection pointing to `https://todo-mcp.jene.in/sse`.
+- **Local stdio Mode:** 
+  - **Command**: `npx`
+  - **Args**: `["-y", "todo-flow-mcp"]`
+  - **Environment variables**:
+    - `TODO_MCP_TOKEN` = `your_token`
+    - `API_URL` = `https://todo.jene.in/api/mcp`
 
 ---
 

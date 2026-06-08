@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   web:
+    image: todo-web:latest
     build:
       context: .
       dockerfile: apps/web/Dockerfile
@@ -17,9 +18,12 @@ services:
       - .env
     volumes:
       - todo_db_data:/app/apps/web/database
+    networks:
+      - todo-network
     restart: unless-stopped
 
   bot:
+    image: todo-bot:latest
     build:
       context: .
       dockerfile: apps/discord-bot/Dockerfile
@@ -29,9 +33,12 @@ services:
       - .env
     depends_on:
       - web
+    networks:
+      - todo-network
     restart: unless-stopped
 
   mcp:
+    image: todo-mcp:latest
     build:
       context: .
       dockerfile: apps/mcp-server/Dockerfile
@@ -44,7 +51,13 @@ services:
       - .env
     depends_on:
       - web
+    networks:
+      - todo-network
     restart: unless-stopped
+
+networks:
+  todo-network:
+    driver: bridge
 
 volumes:
   todo_db_data:

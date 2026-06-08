@@ -111,11 +111,15 @@ npm run dev
 ```
 * **Web Server**: `http://localhost:3000`
 * **Discord Bot**: Runs and logs in with the specified client secret token.
-* **MCP Server**: Can be tested locally or pointed to using `npx todo-flow-mcp`.
+* **MCP Server**: Can be tested locally or pointed to using the published npm package [`todo-flow-mcp`](https://www.npmjs.com/package/todo-flow-mcp) via `npx todo-flow-mcp`.
 
 ### 4. Docker Production Run
-Build and run the entire suite in lightweight Docker containers:
+Build and run the entire suite in lightweight, isolated Docker containers using the custom bridge network:
 ```bash
 docker compose up --build -d
 ```
 The database volume (`todo_db_data`) is mapped to `/app/apps/web/database` inside the web container to persist tasks across deployments.
+
+* **Web App**: Exposed on host port `3010` (mapped to `https://todo.jene.in`)
+* **MCP Server (SSE)**: Exposed on host port `3011` (mapped to `https://todo-mcp.jene.in/sse`)
+* **Discord Bot**: Connects internally to the Next.js database using the private Docker bridge network.
