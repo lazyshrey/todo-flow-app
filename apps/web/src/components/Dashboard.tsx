@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 import { TodoItem, SubTodo, Filter, DiscordStatus, TokenItem } from "./dashboard/types";
-import { getNotesFormat, parseSubTodos, serializeSubTodos } from "./dashboard/helpers";
+import { getNotesFormat, parseSubTodos, serializeSubTodos, copyTextToClipboard } from "./dashboard/helpers";
 import Sidebar from "./dashboard/Sidebar";
 import SettingsView from "./dashboard/SettingsView";
 import CreateTaskView from "./dashboard/CreateTaskView";
@@ -224,7 +224,7 @@ export default function Dashboard() {
   };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+    copyTextToClipboard(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -413,7 +413,7 @@ export default function Dashboard() {
       }
     }
 
-    navigator.clipboard.writeText(md);
+    copyTextToClipboard(md);
     setCopiedTaskId(todo.id);
     setTimeout(() => setCopiedTaskId(null), 2000);
   };

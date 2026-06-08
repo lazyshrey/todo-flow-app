@@ -73,3 +73,33 @@ export function formatDueDate(dueDateTimestamp: number | null | undefined): { te
   if (days < 7) return { text: `Due in ${days} days`, isOverdue: false };
   return { text: `Due ${dateStr}`, isOverdue: false };
 }
+
+// Safe Clipboard Copy Helper (supports http / insecure contexts)
+export function copyTextToClipboard(text: string): boolean {
+  if (typeof window === "undefined") return false;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).catch((err) => {
+      console.error("Async clipboard copy failed:", err);
+    });
+    return true;
+  }
+
+  // Fallback for insecure contexts (HTTP)
+  try {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    const successful = document.execCommand("copy");
+    document.body.removeChild(textArea);
+    return successful;
+  } catch (err) {
+    console.error("Fallback copy failed:", err);
+    return false;
+  }
+}

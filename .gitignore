@@ -10,10 +10,10 @@ build/
 *.tsbuildinfo
 
 # Database files
-database/*.db
-database/*.db-journal
-database/*.db-shm
-database/*.db-wal
+**/*.db
+**/*.db-journal
+**/*.db-shm
+**/*.db-wal
 
 # Local environment configs
 .env

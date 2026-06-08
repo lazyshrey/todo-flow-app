@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Header from "@/components/Header";
 import { useTheme } from "@/lib/useTheme";
+import { copyTextToClipboard } from "@/components/dashboard/helpers";
 
 interface McpToken {
   name: string;
@@ -145,7 +146,7 @@ export default function SettingsPage() {
   };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+    copyTextToClipboard(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
