@@ -2,7 +2,7 @@
   <br />
   <img src="apps/web/public/logo_light.png" alt="Todo Flow Logo" width="180" />
   <br />
-  <h1>⚙️ TODO FLOW</h1>
+  <h1>TODO FLOW</h1>
   <p><strong>Premium Task Management Ecosystem for Developers</strong></p>
   <p><i>A Monorepo-based Task Management Suite with a Web Dashboard, interactive Discord Bot, and Model Context Protocol (MCP) server.</i></p>
 
