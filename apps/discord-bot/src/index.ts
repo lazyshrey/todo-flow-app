@@ -9,7 +9,7 @@ import {
   ActionRowBuilder, 
   Message
 } from 'discord.js';
-import { client, token, clientId, botSecret, apiUrl } from './config';
+import { client, token, clientId, botSecret, apiUrl, webUrl } from './config';
 import { commands } from './commands';
 import { activeCaptureSessions, startCaptureSession } from './capture';
 import { activeListTimeouts, setupBacklogTimeout, setupDetailsTimeout } from './timeouts';
@@ -58,8 +58,7 @@ client.on(Events.MessageCreate, async (message: Message) => {
   try {
     if (message.author.bot) return;
     if (client.user && message.mentions.users.has(client.user.id)) {
-      const webUrl = apiUrl.replace(/\/api\/discord$/, '').replace(/\/api$/, '') || 'http://localhost:3000';
-      const logoUrl = `${webUrl}/logo_light.png`;
+      const botAvatar = client.user.displayAvatarURL();
       
       const greetingEmbed = new EmbedBuilder()
         .setColor(0x282b30)
@@ -71,7 +70,7 @@ client.on(Events.MessageCreate, async (message: Message) => {
           `**/todo new** — Start capture mode (type details directly in chat, or use private modals).\n\n` +
           `*Syncs instantly to your web profile.*`
         )
-        .setThumbnail(logoUrl)
+        .setThumbnail(botAvatar)
         .setTimestamp();
 
       const btnWeb = new ButtonBuilder()

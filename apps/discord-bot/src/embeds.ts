@@ -10,6 +10,7 @@ import {
   TextInputStyle
 } from 'discord.js';
 import { getFormattedDueDate, getNotesFormat, parseSubTodos, serializeSubTodos } from './utils';
+import { webUrl } from './config';
 
 export function buildTodoListEmbed(todos: any[], username: string) {
   const embed = new EmbedBuilder()
@@ -109,7 +110,7 @@ export function buildLinkEmbed(code: string) {
     .setTitle('🔗 Link your Discord Account')
     .setDescription(
       `To link your Discord account to your Todo Web Profile:\n\n` +
-      `1. Open the Todo Web App at **\`http://localhost:3000/settings\`**\n` +
+      `1. Open the Todo Web App at **\`${webUrl}/settings\`**\n` +
       `2. Go to **Discord Integration**\n` +
       `3. Enter the following 6-digit code:\n` +
       `# **\`${code}\`**\n\n` +
