@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: apps/web/Dockerfile
     ports:
-      - "3000:3000"
+      - "3010:3000"
     env_file:
       - .env
     volumes:
@@ -17,6 +17,23 @@ services:
     build:
       context: .
       dockerfile: apps/discord-bot/Dockerfile
+    environment:
+      - API_URL=http://web:3000/api/discord
+    env_file:
+      - .env
+    depends_on:
+      - web
+    restart: unless-stopped
+
+  mcp:
+    build:
+      context: .
+      dockerfile: apps/mcp-server/Dockerfile
+    ports:
+      - "3011:3011"
+    environment:
+      - PORT=3011
+      - API_URL=http://web:3000/api/mcp
     env_file:
       - .env
     depends_on:

@@ -1,9 +1,12 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
+import http from 'http';
+import { URL } from 'url';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -313,9 +316,88 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 });
 
 async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error("Todo MCP Server running on stdio");
+  const port = process.env.PORT;
+  
+  if (port) {
+    // Server-Sent Events (SSE) mode
+    const serverPort = parseInt(port, 10);
+    const transports = new Map<string, SSEServerTransport>();
+
+    const httpServer = http.createServer((req, res) => {
+      // Set CORS headers
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+      if (req.method === 'OPTIONS') {
+        res.writeHead(200);
+        res.end();
+        return;
+      }
+
+      const url = new URL(req.url || '', `http://${req.headers.host || 'localhost'}`);
+
+      if (req.method === 'GET' && url.pathname === '/sse') {
+        const transport = new SSEServerTransport('/messages', res);
+        const sessionId = (transport as any).sessionId;
+        
+        if (sessionId) {
+          transports.set(sessionId, transport);
+          res.on('close', () => {
+            transports.delete(sessionId);
+          });
+        }
+
+        server.connect(transport).catch((err) => {
+          console.error("Failed to connect SSE transport:", err);
+        });
+        return;
+      }
+
+      if (req.method === 'POST' && url.pathname === '/messages') {
+        const sessionId = url.searchParams.get('sessionId');
+        if (!sessionId) {
+          res.writeHead(400, { 'Content-Type': 'text/plain' });
+          res.end('Missing sessionId parameter');
+          return;
+        }
+
+        const transport = transports.get(sessionId);
+        if (!transport) {
+          res.writeHead(404, { 'Content-Type': 'text/plain' });
+          res.end('No transport found for sessionId');
+          return;
+        }
+
+        let body = '';
+        req.on('data', (chunk) => {
+          body += chunk.toString();
+        });
+        req.on('end', async () => {
+          try {
+            const parsedBody = JSON.parse(body);
+            await transport.handlePostMessage(req, res, parsedBody);
+          } catch (err: any) {
+            res.writeHead(400, { 'Content-Type': 'text/plain' });
+            res.end(`Invalid JSON body: ${err.message}`);
+          }
+        });
+        return;
+      }
+
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('Not Found');
+    });
+
+    httpServer.listen(serverPort, () => {
+      console.error(`Todo MCP Server running on SSE http://localhost:${serverPort}`);
+    });
+  } else {
+    // Fallback to local Stdio mode
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
+    console.error("Todo MCP Server running on stdio");
+  }
 }
 
 main().catch((error) => {
