@@ -12,6 +12,11 @@ import {
 import { getFormattedDueDate, getNotesFormat, parseSubTodos, serializeSubTodos } from './utils';
 import { webUrl } from './config';
 
+function truncateValue(value: string, maxLength: number = 1024): string {
+  if (value.length <= maxLength) return value;
+  return value.substring(0, maxLength - 3) + '...';
+}
+
 export function buildTodoListEmbed(todos: any[], username: string) {
   const embed = new EmbedBuilder()
     .setColor(0x282b30)
@@ -39,8 +44,8 @@ export function buildTodoListEmbed(todos: any[], username: string) {
       const dueDateStr = todo.dueDate ? ` | Due: <t:${Math.floor(todo.dueDate / 1000)}:d>` : '';
       
       embed.addFields({
-        name: `${idx + 1}. ${todo.title}`,
-        value: `> Category: \`${category}\`${dueDateStr}${detailSnippet}`,
+        name: truncateValue(`${idx + 1}. ${todo.title}`, 256),
+        value: truncateValue(`> Category: \`${category}\`${dueDateStr}${detailSnippet}`, 1024),
         inline: false
       });
     });
@@ -126,10 +131,10 @@ export function buildTaskDetailsEmbed(todo: any) {
   
   const embed = new EmbedBuilder()
     .setColor(0x282b30)
-    .setTitle(todo.title)
+    .setTitle(truncateValue(todo.title || '', 256))
     .addFields(
-      { name: 'Category', value: `\`${category}\``, inline: true },
-      { name: 'Due Date', value: dueDateStr, inline: true },
+      { name: 'Category', value: truncateValue(`\`${category}\``, 1024), inline: true },
+      { name: 'Due Date', value: truncateValue(dueDateStr, 1024), inline: true },
       { name: 'Status', value: todo.completed ? 'Completed' : 'Pending', inline: true },
       { name: 'Format', value: format === 'checklist' ? 'Checklist' : 'Text', inline: true }
     )
@@ -144,12 +149,12 @@ export function buildTaskDetailsEmbed(todo: any) {
         const box = item.completed ? '☑️' : '⬜';
         return `${idx + 1}. ${box} ${item.text}`;
       }).join('\n');
-      embed.setDescription(`### Checklist:\n${itemsList}`);
+      embed.setDescription(truncateValue(`### Checklist:\n${itemsList}`, 4096));
     } else {
       embed.setDescription(`### Checklist:\n*(No items added yet)*`);
     }
   } else {
-    embed.setDescription(`### Notes:\n${todo.notes || '*(No description provided)*'}`);
+    embed.setDescription(truncateValue(`### Notes:\n${todo.notes || '*(No description provided)*'}`, 4096));
   }
 
   return embed;
@@ -233,9 +238,9 @@ export function buildCaptureDraftEmbed(session: any) {
     .setColor(0x282b30)
     .setTitle(isEdit ? 'Edit Task (Capture Mode)' : 'Create Task (Capture Mode)')
     .addFields(
-      { name: 'Title', value: session.title ? `**${session.title}**` : '*(No title set)*', inline: false },
-      { name: 'Category', value: `\`${category}\``, inline: true },
-      { name: 'Due Date', value: dueDateStr, inline: true },
+      { name: 'Title', value: truncateValue(session.title ? `**${session.title}**` : '*(No title set)*', 1024), inline: false },
+      { name: 'Category', value: truncateValue(`\`${category}\``, 1024), inline: true },
+      { name: 'Due Date', value: truncateValue(dueDateStr, 1024), inline: true },
       { name: 'Format', value: session.format === 'checklist' ? 'Checklist' : 'Text', inline: true }
     )
     .setTimestamp();
@@ -259,14 +264,29 @@ export function buildCaptureDraftEmbed(session: any) {
   // Display what is captured so far
   if (session.format === 'checklist') {
     if (session.checklist.length > 0) {
-      const itemsList = session.checklist.map((item: string, idx: number) => {
-        return `${idx + 1}. ⬜ ${item}`;
-      }).join('\n');
+      let itemsList = '';
+      let addedCount = 0;
+      for (let idx = 0; idx < session.checklist.length; idx++) {
+        const item = session.checklist[idx];
+        const line = `${idx + 1}. ⬜ ${item}\n`;
+        if ((itemsList + line).length > 1000) {
+          itemsList += `... and ${session.checklist.length - addedCount} more items.`;
+          break;
+        }
+        itemsList += line;
+        addedCount++;
+      }
+      if (itemsList.endsWith('\n')) {
+        itemsList = itemsList.slice(0, -1);
+      }
+      if (!itemsList) {
+        itemsList = truncateValue(session.checklist[0], 1000);
+      }
       embed.addFields({ name: `Checklist Items (${session.checklist.length})`, value: itemsList });
     }
   } else {
     if (session.notesText) {
-      embed.addFields({ name: 'Description', value: session.notesText });
+      embed.addFields({ name: 'Description', value: truncateValue(session.notesText, 1024) });
     }
   }
 
