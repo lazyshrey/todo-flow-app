@@ -104,6 +104,16 @@ export default function Header() {
                   Dashboard
                 </Link>
                 <Link
+                  href="/docs"
+                  className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 border ${
+                    pathname === "/docs"
+                      ? "bg-white/10 text-zinc-100 border-white/10"
+                      : "text-zinc-400 hover:text-zinc-200 hover:bg-white/5 border-transparent"
+                  }`}
+                >
+                  Docs
+                </Link>
+                <Link
                   href="/settings"
                   className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 border ${
                     pathname === "/settings"
@@ -125,12 +135,24 @@ export default function Header() {
                 </div>
               </>
             ) : isLoaded ? (
-              <SignInButton mode="modal">
-                <button className="flex items-center gap-1.5 px-5 py-2 rounded-full text-xs font-bold text-zinc-950 bg-white hover:bg-zinc-100 transition-all duration-300 cursor-pointer shadow-md active:scale-95">
-                  <LogIn className="h-3.5 w-3.5 stroke-[2.5]" />
-                  Sign In
-                </button>
-              </SignInButton>
+              <>
+                <Link
+                  href="/docs"
+                  className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 border ${
+                    pathname === "/docs"
+                      ? "bg-white/10 text-zinc-100 border-white/10"
+                      : "text-zinc-400 hover:text-zinc-200 hover:bg-white/5 border-transparent"
+                  }`}
+                >
+                  Docs
+                </Link>
+                <SignInButton mode="modal">
+                  <button className="flex items-center gap-1.5 px-5 py-2 rounded-full text-xs font-bold text-zinc-950 bg-white hover:bg-zinc-100 transition-all duration-300 cursor-pointer shadow-md active:scale-95">
+                    <LogIn className="h-3.5 w-3.5 stroke-[2.5]" />
+                    Sign In
+                  </button>
+                </SignInButton>
+              </>
             ) : null}
           </nav>
         </div>

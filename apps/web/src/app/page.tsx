@@ -468,12 +468,14 @@ export default function LandingPage() {
               description="CRUD tasks using Discord slash commands, embeds, and modals. Securely linked to user profiles using ephemeral tokens."
               delay={0.05}
             />
-            <FeatureCard
-              icon={Terminal}
-              title="Model Context Protocol"
-              description="Expose backlog databases as structured tools to Claude Desktop, Cursor, and other AI IDEs over standard secure stdio."
-              delay={0.1}
-            />
+            <a href="/docs" className="block">
+              <FeatureCard
+                icon={Terminal}
+                title="Model Context Protocol"
+                description="Expose backlog databases as structured tools to Claude Desktop, Cursor, and other AI IDEs over standard secure stdio. Click to view docs."
+                delay={0.1}
+              />
+            </a>
             <FeatureCard
               icon={Zap}
               title="Transactional Sync"
@@ -720,10 +722,10 @@ function SelfHostSection() {
             Star on GitHub
           </a>
           <a
-            href="#developers"
+            href="/docs"
             className="rounded-full bg-white px-6 py-3 text-xs font-bold text-zinc-950 hover:bg-zinc-100 transition-colors"
           >
-            View Self-Hosting Docs
+            View Integration Docs
           </a>
         </div>
       </div>

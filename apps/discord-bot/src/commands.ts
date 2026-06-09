@@ -34,4 +34,9 @@ export const commands = [
         .setName('link')
         .setDescription('Link your Discord account to the Todo Web Application')
     )
+    .addSubcommand(subcommand =>
+      subcommand
+        .setName('ping')
+        .setDescription('Check the bot latency and heartbeat')
+    )
 ].map(command => command.toJSON());

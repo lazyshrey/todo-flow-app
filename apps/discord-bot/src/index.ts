@@ -137,6 +137,16 @@ client.on('interactionCreate', async (interaction: Interaction) => {
         return;
       }
 
+      if (subcommand === 'ping') {
+        const latency = Date.now() - interaction.createdTimestamp;
+        const apiLatency = Math.round(client.ws.ping);
+        await interaction.reply({
+          content: `🏓 **Pong!**\nLatency: **${latency}ms** | API Heartbeat: **${apiLatency}ms**`,
+          ephemeral: true
+        });
+        return;
+      }
+
       // Check linkage for all other commands
       const linked = await ensureLinked(interaction);
       if (!linked) return;

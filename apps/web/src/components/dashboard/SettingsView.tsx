@@ -159,7 +159,10 @@ export default function SettingsView({
           </div>
           <div>
             <h3 className="text-md font-semibold text-zinc-100 font-bold">Model Context Protocol (MCP) Tokens</h3>
-            <p className="text-xs text-zinc-400">Authorize local IDE extensions or AI assistants to read and edit tasks.</p>
+            <p className="text-xs text-zinc-400">
+              Authorize local IDE extensions or AI assistants to read and edit tasks. 
+              Read the <a href="/docs" className="text-white underline hover:text-zinc-350">integration guide</a> or view the package on <a href="https://www.npmjs.com/package/todo-flow-mcp" target="_blank" rel="noreferrer" className="text-white underline hover:text-zinc-350 font-bold">npm</a>.
+            </p>
           </div>
         </div>
 
@@ -175,6 +178,29 @@ export default function SettingsView({
                 {copied ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
               </button>
             </div>
+
+            {/* Quick config helper */}
+            <div className="mt-4 pt-3 border-t border-white/5 space-y-2 text-zinc-400 select-text">
+              <p className="text-[10px] font-bold text-zinc-200 select-none">Quick Integration (Claude Desktop Config):</p>
+              <pre className="bg-zinc-950 p-2.5 rounded-lg border border-white/10 overflow-x-auto text-[10px] text-zinc-300">
+{`{
+  "mcpServers": {
+    "todo-flow": {
+      "command": "npx",
+      "args": ["-y", "todo-flow-mcp"],
+      "env": {
+        "TODO_MCP_TOKEN": "${generatedToken}",
+        "API_URL": "${typeof window !== "undefined" ? window.location.origin : "https://todo.jene.in"}/api/mcp"
+      }
+    }
+  }
+}`}
+              </pre>
+              <p className="text-[10px] text-zinc-500 select-none">
+                Paste this into your configuration file. For other tools like Cursor, see the <a href="/docs" className="text-zinc-300 underline hover:text-white font-semibold">Docs</a>.
+              </p>
+            </div>
+
             <button
               onClick={() => setGeneratedToken(null)}
               className="px-4 py-1.5 text-xs font-bold rounded-lg bg-white/10 hover:bg-white/20 text-zinc-200 transition-all cursor-pointer"

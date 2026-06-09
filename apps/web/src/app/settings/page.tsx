@@ -375,7 +375,8 @@ export default function SettingsPage() {
                 MCP Tokens
               </h2>
               <p className="text-sm text-zinc-400">
-                Generate tokens for AI assistants like Cursor and Claude
+                Generate tokens for AI assistants like Cursor and Claude. 
+                Read the <a href="/docs" className="text-white underline hover:text-zinc-350">integration docs</a> or see <a href="https://www.npmjs.com/package/todo-flow-mcp" target="_blank" rel="noreferrer" className="text-white underline hover:text-zinc-350 font-bold">npm</a>.
               </p>
             </div>
           </div>
@@ -393,7 +394,7 @@ export default function SettingsPage() {
                 Copy this token now. You won't be able to see it again.
               </p>
               <div className="flex items-center gap-2">
-                <code className="flex-1 rounded-lg bg-zinc-950/80 px-4 py-2.5 text-xs font-mono text-zinc-300 break-all">
+                <code className="flex-1 rounded-lg bg-zinc-950/80 px-4 py-2.5 text-xs font-mono text-zinc-300 break-all select-all">
                   {generatedToken}
                 </code>
                 <button
@@ -406,6 +407,28 @@ export default function SettingsPage() {
                     <Copy className="h-4 w-4" />
                   )}
                 </button>
+              </div>
+
+              {/* Quick config helper */}
+              <div className="mt-4 pt-3 border-t border-white/5 space-y-2 text-zinc-400 select-text font-mono">
+                <p className="text-[10px] font-bold text-zinc-200 select-none">Quick Integration (Claude Desktop Config):</p>
+                <pre className="bg-zinc-950 p-2.5 rounded-lg border border-white/10 overflow-x-auto text-[10px] text-zinc-300">
+{`{
+  "mcpServers": {
+    "todo-flow": {
+      "command": "npx",
+      "args": ["-y", "todo-flow-mcp"],
+      "env": {
+        "TODO_MCP_TOKEN": "${generatedToken}",
+        "API_URL": "${typeof window !== "undefined" ? window.location.origin : "https://todo.jene.in"}/api/mcp"
+      }
+    }
+  }
+}`}
+                </pre>
+                <p className="text-[10px] text-zinc-500 select-none">
+                  Paste this into your configuration file. For other tools like Cursor, see the <a href="/docs" className="text-zinc-300 underline hover:text-white font-semibold">Docs</a>.
+                </p>
               </div>
             </motion.div>
           )}

@@ -24,6 +24,8 @@
   --scrollbar-thumb: #27272a;
   --scrollbar-thumb-hover: #3f3f46;
   --backdrop-bg: rgba(255, 255, 255, 0.01);
+  --popover: #18181b;
+  --popover-foreground: #f4f4f5;
 }
 
 .theme-light {
@@ -48,6 +50,8 @@
   --scrollbar-thumb: #d4d4d8;
   --scrollbar-thumb-hover: #a1a1aa;
   --backdrop-bg: rgba(0, 0, 0, 0.03);
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
 }
 
 .theme-gray {
@@ -70,6 +74,8 @@
   --scrollbar-thumb: #2b2d31;
   --scrollbar-thumb-hover: #35373c;
   --backdrop-bg: rgba(255, 255, 255, 0.01);
+  --popover: #2b2d31;
+  --popover-foreground: #f2f3f5;
 }
 
 body {
