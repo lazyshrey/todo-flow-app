@@ -2,10 +2,8 @@
 
 import { useUser } from "@clerk/nextjs";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   CheckSquare,
   Globe,
@@ -20,8 +18,6 @@ import {
 import Header from "@/components/Header";
 import Dashboard from "@/components/Dashboard";
 import SideRays from "@/components/SideRays";
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface MockTodo {
   id: string;
@@ -286,53 +282,6 @@ function FeatureCard({
 
 export default function LandingPage() {
   const { isSignedIn, isLoaded } = useUser();
-  const heroRef = useRef<HTMLDivElement>(null);
-  const featuresRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!heroRef.current || !featuresRef.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.from(".hero-title", {
-        opacity: 0,
-        y: 40,
-        duration: 1,
-        ease: "power3.out",
-      });
-
-      gsap.from(".hero-subtitle", {
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        delay: 0.2,
-        ease: "power3.out",
-      });
-
-      gsap.from(".hero-cta", {
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        delay: 0.4,
-        ease: "power3.out",
-      });
-
-      gsap.utils.toArray<HTMLElement>(".feature-card").forEach((card, i) => {
-        gsap.from(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-          },
-          opacity: 0,
-          y: 40,
-          duration: 0.8,
-          delay: i * 0.05,
-          ease: "power2.out",
-        });
-      });
-    });
-
-    return () => ctx.revert();
-  }, []);
 
   if (!isLoaded) {
     return (
@@ -369,7 +318,7 @@ export default function LandingPage() {
 
       <Header />
 
-      <section id="hero" ref={heroRef} className="relative px-6 pt-24 pb-32 z-10">
+      <section id="hero" className="relative px-6 pt-24 pb-32 z-10">
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
             <motion.h1
@@ -437,7 +386,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="features" ref={featuresRef} className="relative px-6 py-32 border-t border-white/5 z-10">
+      <section id="features" className="relative px-6 py-32 border-t border-white/5 z-10">
         <div className="mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
