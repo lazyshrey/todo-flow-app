@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://todoflow.dev"),
+  metadataBase: new URL("https://todo.jene.in"),
   title: "Todo Flow | Tasks That Flow Everywhere You Work",
   description: "One unified, real-time synchronized todo application connecting your Web Dashboard, Discord Bot, and AI Coding Assistants (MCP Server) seamlessly.",
   keywords: ["todo", "task manager", "discord bot", "mcp server", "developer productivity", "clerk auth", "nextjs app router", "monochrome UI"],
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Todo Flow | Tasks That Flow Everywhere You Work",
     description: "One unified, real-time synchronized todo application connecting your Web Dashboard, Discord Bot, and AI Coding Assistants (MCP Server) seamlessly.",
-    url: "https://todoflow.dev",
+    url: "https://todo.jene.in",
     siteName: "Todo Flow",
     images: [
       {

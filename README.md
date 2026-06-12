@@ -9,6 +9,7 @@
   <br />
 
   <div align="center">
+    <a href="https://discord.gg/ZVCB8EnRX2"><img src="https://img.shields.io/badge/Discord-Join%20Lazy%20Devs-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" /></a>
     <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-15.0-black?style=for-the-badge&logo=next.js" alt="Next.js" /></a>
     <a href="https://discord.js.org/"><img src="https://img.shields.io/badge/Discord.js-14.0-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord.js" /></a>
     <a href="https://modelcontextprotocol.io/"><img src="https://img.shields.io/badge/MCP-1.2.0-FF5722?style=for-the-badge&logo=node.js&logoColor=white" alt="Model Context Protocol" /></a>
@@ -18,6 +19,9 @@
     <a href="https://www.docker.com/"><img src="https://img.shields.io/badge/Docker-Orchestration-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" /></a>
   </div>
 
+  <br />
+  <img src="apps/web/public/screenshot.png" alt="Todo Flow Ecosystem Overview" width="900" style="border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);" />
+  <br />
   <br />
 </div>
 
@@ -123,3 +127,14 @@ The database volume (`todo_db_data`) is mapped to `/app/apps/web/database` insid
 * **Web App**: Exposed on host port `3010` (mapped to `https://todo.jene.in`)
 * **MCP Server (SSE)**: Exposed on host port `3011` (mapped to `https://todo-mcp.jene.in/sse`)
 * **Discord Bot**: Connects internally to the Next.js database using the private Docker bridge network.
+
+---
+
+## 💬 Community & Support
+
+Join the **Lazy Devs** community on Discord to discuss ideas, get support, or collaborate:
+
+<a href="https://discord.gg/ZVCB8EnRX2">
+  <img src="https://img.shields.io/badge/Discord-Join%20Lazy%20Devs-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join Lazy Devs Discord" />
+</a>
+

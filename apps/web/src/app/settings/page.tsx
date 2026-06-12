@@ -233,18 +233,35 @@ export default function SettingsPage() {
           transition={{ duration: 0.4, delay: 0.1 }}
           className="mb-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-xl p-6"
         >
-          <div className="mb-6 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5">
-              <MessageSquare className="h-5 w-5 text-zinc-300" />
+          <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                <MessageSquare className="h-5 w-5 text-zinc-300" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-zinc-100">
+                  Discord Integration
+                </h2>
+                <p className="text-sm text-zinc-400">
+                  Link your Discord account to manage tasks from Discord
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-lg font-semibold text-zinc-100">
-                Discord Integration
-              </h2>
-              <p className="text-sm text-zinc-400">
-                Link your Discord account to manage tasks from Discord
-              </p>
-            </div>
+            <a
+              href="https://discord.gg/ZVCB8EnRX2"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 self-start sm:self-center rounded-lg bg-[#5865F2] hover:bg-[#4752C4] px-4 py-2 text-xs font-semibold text-white transition-all duration-300 cursor-pointer active:scale-95 shadow-md shadow-[#5865F2]/10 hover:shadow-[#5865F2]/20"
+            >
+              <svg 
+                className="h-3.5 w-3.5 fill-current" 
+                viewBox="0 0 127.14 96.36" 
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.5-5A51.31,51.31,0,0,0,31.2,76.58a74.37,74.37,0,0,0,64.74,0,51.31,51.31,0,0,0,3.07,4a68.43,68.43,0,0,1-10.5,5,77.7,77.7,0,0,0,6.63,10.85,105.73,105.73,0,0,0,31-18.83C129,54.65,123.5,31.58,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/>
+              </svg>
+              Join Lazy Devs Discord
+            </a>
           </div>
 
           {discordStatus?.discordId ? (
